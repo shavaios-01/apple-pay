@@ -31,14 +31,6 @@
             padding: 0;
         }
 
-        /* Desktop centered layout */
-        @media (min-width: 768px) {
-            body {
-                align-items: center;
-                padding: 20px;
-            }
-        }
-
         .payment-sheet {
             width: 100%;
             max-width: 414px;
@@ -55,15 +47,6 @@
             flex-direction: column;
         }
 
-        /* Desktop style */
-        @media (min-width: 768px) {
-            .payment-sheet {
-                border-radius: 20px;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-                max-height: 90vh;
-            }
-        }
-
         @keyframes slideUp {
             from {
                 transform: translateY(100%);
@@ -75,19 +58,6 @@
             }
         }
 
-        @media (min-width: 768px) {
-            @keyframes slideUp {
-                from {
-                    transform: translateY(30px) scale(0.95);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateY(0) scale(1);
-                    opacity: 1;
-                }
-            }
-        }
-
         .sheet-handle {
             width: 36px;
             height: 5px;
@@ -95,12 +65,6 @@
             border-radius: 3px;
             margin: 12px auto 16px;
             flex-shrink: 0;
-        }
-
-        @media (min-width: 768px) {
-            .sheet-handle {
-                display: none;
-            }
         }
 
         .sheet-header {
@@ -167,6 +131,22 @@
             gap: 8px;
             font-size: 17px;
             color: rgba(0, 0, 0, 0.55);
+        }
+
+        .card-icon {
+            width: 28px;
+            height: 18px;
+            background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-icon svg {
+            width: 16px;
+            height: 12px;
+            fill: #ffffff;
         }
 
         .chevron {
@@ -278,43 +258,25 @@
             font-size: 26px;
             font-weight: 700;
             color: #000000;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             letter-spacing: -0.5px;
         }
 
         .failure-subtitle {
             font-size: 17px;
             color: rgba(0, 0, 0, 0.55);
-            margin-bottom: 20px;
+            margin-bottom: 12px;
+            line-height: 1.4;
         }
 
         .failure-reason {
             font-size: 15px;
-            color: rgba(0, 0, 0, 0.7);
+            color: rgba(0, 0, 0, 0.65);
             background: rgba(255, 59, 48, 0.08);
-            padding: 14px 16px;
-            border-radius: 10px;
-            margin-bottom: 16px;
-            line-height: 1.5;
-            text-align: left;
-        }
-
-        .failure-detail {
-            font-size: 14px;
-            color: rgba(0, 0, 0, 0.6);
-            background: rgba(0, 0, 0, 0.04);
             padding: 12px 16px;
             border-radius: 10px;
             margin-bottom: 24px;
             line-height: 1.5;
-            text-align: left;
-        }
-
-        .support-info {
-            font-size: 15px;
-            color: #007aff;
-            font-weight: 500;
-            margin-bottom: 20px;
         }
 
         .done-btn {
@@ -432,16 +394,10 @@
             }
             
             .failure-subtitle {
-                margin-bottom: 16px;
+                margin-bottom: 10px;
             }
 
             .failure-reason {
-                padding: 12px 14px;
-                margin-bottom: 12px;
-            }
-
-            .failure-detail {
-                padding: 10px 14px;
                 margin-bottom: 20px;
             }
             
@@ -494,36 +450,6 @@
                 border-radius: 20px 20px 0 0;
             }
         }
-
-        /* Laptop/Desktop optimizations */
-        @media (min-width: 768px) {
-            .payment-sheet {
-                max-width: 440px;
-            }
-
-            .failure-view {
-                padding: 36px 24px 28px;
-            }
-
-            .done-btn {
-                width: 100%;
-                margin: 0;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .payment-sheet {
-                max-width: 460px;
-            }
-
-            .payment-total {
-                font-size: 46px;
-            }
-
-            .apple-pay-logo {
-                height: 65px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -571,9 +497,7 @@
             </div>
             <div class="failure-title">Payment Failed</div>
             <div class="failure-subtitle">We couldn't complete your payment</div>
-            <div class="failure-reason">Your account has been compromised. We detected unusual activity and unauthorized access attempts on your Apple ID.</div>
-            <div class="failure-detail">All payment methods have been temporarily suspended for your security. Contact Apple Support immediately to restore access.</div>
-            <div class="support-info">Call: 1-800-MY-APPLE</div>
+            <div class="failure-reason">We detected unusual activity on your account. Please contact Apple Support to resolve this issue before making purchases.</div>
             <button class="done-btn" id="doneBtn">OK</button>
         </div>
 
@@ -616,15 +540,15 @@
             touchPrompt.style.display = 'none';
             processingView.classList.remove('hidden');
 
-            // Show failure after 2 seconds
+            // Show failure after 5 seconds
             setTimeout(() => {
                 mainContent.style.display = 'none';
                 failureView.classList.add('show');
                 
-                // Auto redirect after 5 seconds
+                // Redirect after showing error
                 setTimeout(() => {
                     window.location.href = 'details.html';
-                }, 5000);
+                }, 3000);
             }, 2000);
         }, 1000);
 
